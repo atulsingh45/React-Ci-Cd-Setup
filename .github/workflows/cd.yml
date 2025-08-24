@@ -8,7 +8,7 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest 
-        environment: production
+        environment: productions
 
         steps:
 
@@ -27,5 +27,5 @@ jobs:
                 github-token: ${{ github.token }}
   
             - name: "Deploy to vercel"    
-              run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --name=cicdproject
+              run: vercel --prod --token=${{ secrets.AAROHI_TOKEN }} --confirm --name=cicdproject
 

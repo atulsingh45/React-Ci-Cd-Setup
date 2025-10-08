@@ -1,51 +1,30 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Clean up workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-
-        stage('Check workspace contents') {
-            steps {
-                sh 'ls -la'
-            }
-        }
-
-        stage('Build project') {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:22.12.0-alpine'
                     args '-u root'
+                    reuseNode true
                 }
             }
-            environment {
-                WORKSPACE_DIR = "${pwd()}"
-            }
+
             steps {
-                // Explicitly mount current directory and set working directory
-                script {
-                    def currentDir = pwd()
+
+                step {
+                    cleanWS()
                 }
-                // Run commands in Docker with volume mounted
-                container('node:22.12.0-alpine') {
+                step {
                     sh '''
-                        ls -la
+                        ls -l
                         node --version
                         npm --version
                         npm install
                         npm run build
-                        ls -la
+                        ls -l
                     '''
-                }
+                }     
             }
         }
     }

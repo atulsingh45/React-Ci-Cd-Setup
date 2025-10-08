@@ -1,11 +1,13 @@
 pipeline {
     agent any
+
     options {
-        skipDefaultCheckout(true) // Skip the degault checkout
+        skipDefaultCheckout(true) // Skip the default checkout
     }
+
     stages {
 
-        stage ('clean up code') {
+        stage('Clean up code') {
             steps {
                 cleanWs()
             }
@@ -13,9 +15,10 @@ pipeline {
 
         stage('Checkout using SCM') {
             steps {
-                checkout scm // Checkout the code
+                checkout scm // Checkout the code from source control
             }
         }
+
         stage('Build') {
             agent {
                 docker {
@@ -30,7 +33,6 @@ pipeline {
                     node --version
                     npm --version
                     npm install
-                
                     npm run build
                     ls -l
                 '''
@@ -45,13 +47,11 @@ pipeline {
                     reuseNode true
                 }
             }
-
             steps {
                 sh '''
-                    npm run test                   
+                    npm run test
                 '''
             }
-        
         }
 
         stage('Deploy') {
@@ -61,13 +61,14 @@ pipeline {
                     args '-u root'
                     reuseNode true
                 }
-
-                steps {
-                    sh '''
-                        npm install -g vercel
-                    '''
-                }
+            }
+            steps {
+                sh '''
+                    npm install -g vercel
+                    vercel --prod --token=$VERCEL_TOKEN
+                '''
             }
         }
     }
 }
+

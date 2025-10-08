@@ -17,7 +17,7 @@ pipeline {
                 }
 
                 step('Build project') {
-                sh '''
+                    sh '''
                     ls -l
                     node --version
                     npm --version

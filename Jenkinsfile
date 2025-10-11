@@ -72,7 +72,7 @@ pipeline {
                 sh '''
                     npm install -g vercel
                     echo $MY_VAR
-                    vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --name=cicdproject
+                    vercel --prod --token=$VERCEL_TOKEN --confirm --name=cicdproject
                 '''
             }
         }

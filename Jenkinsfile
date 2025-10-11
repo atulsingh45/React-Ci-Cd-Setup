@@ -64,7 +64,7 @@ pipeline {
 
             steps {
                 sh '''
-                    npm install -g verce
+                    npm install -g vercel
                 '''
             }
         }

@@ -32,16 +32,14 @@ pipeline {
                 }
             }
             steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    sh '''
-                        ls -l
-                        node --version
-                        npm --version
-                        npm install
-                        npm run build
-                        ls -l
-                    '''
-                }
+                sh '''
+                    ls -l
+                    node --version
+                    npm --version
+                    npm install
+                    npm run build
+                    ls -l
+                '''
             }
         }
 
@@ -54,11 +52,9 @@ pipeline {
                 }
             }
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    sh '''
-                        npm run test
-                    '''
-                }
+                sh '''
+                    npm run test
+                '''
             }
         }
 
@@ -71,13 +67,12 @@ pipeline {
                 }
             }
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    sh '''
-                        npm install -g vercel
-                        echo "$MY_VAR"
-                    '''
-                }
+                sh '''
+                    npm install -g vercel
+                    echo "$MY_VAR"
+                '''
             }
         }
     }
 }
+
